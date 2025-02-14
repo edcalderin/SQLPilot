@@ -1,22 +1,21 @@
-from sqlalchemy import create_engine
-from dataclasses import dataclass
+import snowflake.connector as sc
+from dotenv import load_dotenv
+from pathlib import Path
+import os 
 
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(dotenv_path=env_path, override=True)
 
-@dataclass(frozen=True, kw_only=True)
 class SnowflakeConnection:
-    user: str
-    password: str
-    account: str
-    
-    def create_session(self):
-        engine = create_engine(f"snowflake://{self.user}:{self.password}@{self.account}/")
-        
-        with engine.connect() as connection:
-            try:
-                results = connection.execute('SELECT CURRENT_VERSION()').fetchone()
-                print(f"Connected to Snowflake. Version: {results[0]}")
-                return connection
-            except Exception as e:
-                print(f"Error connecting to Snowflake: {e}")
-                return None
+    @staticmethod    
+    def create_connection():
+        con = sc.connect(
+            user=os.getenv("USER"),
+            password=os.getenv("PASSWORD"),
+            account=os.getenv("ACCOUNT"),
+            database=os.getenv("DATABASE_NAME"),
+            schema=os.getenv("SCHEMA"),
+            role=os.getenv("ROLE_NAME")
+        )
+        return con
             
