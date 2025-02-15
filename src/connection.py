@@ -36,7 +36,7 @@ class SnowflakeConnection:
 
     def data_querying(self):
         credentials: dict = self._credentials()
-        snowflake_uri: str = f"snoeflake://{credentials.get('USERNAME')}:{credentials.get('PASSWORD')}@{credentials.get('ACCOUNT')}/{credentials.get('SCHEMA')}?warehouse={credentials.get('WAREHOUSE')}&role={credentials.get('ROLE')}"
+        snowflake_uri: str = f"snowflake://{credentials.get('user')}:{credentials.get('password')}@{credentials.get('account')}/{credentials.get('database')}/{credentials.get('schema')}?warehouse={os.getenv('WAREHOUSE_NAME')}&role={credentials.get('role')}"
 
         Settings.llm = OpenAI(model="gpt-4o", temperature=0)
         Settings.chunk_size=1024
@@ -45,6 +45,6 @@ class SnowflakeConnection:
         sql_database = SQLDatabase(engine)
         query_engine = NLSQLTableQueryEngine(
             sql_database=sql_database,
-            tables=[credentials.get("TABLE_NAME")],
+            tables=[os.getenv("TABLE_NAME")]
         )
-
+        return engine, query_engine

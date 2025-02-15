@@ -14,9 +14,11 @@ dependencies = [
     "snowflake-sqlalchemy (>=1.7.3,<2.0.0)",
     "streamlit (>=1.41.1,<2.0.0)",
     "python-dotenv (>=1.0.1,<2.0.0)",
-    "snowflake-connector-python[pandas] (>=3.13.2,<4.0.0)",
+    "llama-index-embeddings-openai (>=0.3.1,<0.4.0)",
+    "llama-index-llms-openai (>=0.3.19,<0.4.0)",
     "snowflake-snowpark-python (>=1.27.0,<2.0.0)",
-    "llama-index-llms-openai (>=0.3.19,<0.4.0)"
+    "snowflake-connector-python[pandas] (>=3.13.2,<4.0.0)",
+    "pyarrow (>=19.0.0,<20.0.0)",
 ]
 
 
